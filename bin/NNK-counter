@@ -1,2 +1,12 @@
 #!/usr/bin/env python
 # filename: NNK-counter
+
+import warnings
+
+from NNK.variant_counter import count_variants
+
+
+if __name__ == '__main__':
+    warnings.filterwarnings("ignore")
+    args = count_variants.parse_arguments()
+    count_variants.main(args)
