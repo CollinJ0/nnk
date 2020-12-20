@@ -13,7 +13,7 @@ class variants:
     def variant_df(self):
         return twist_to_variant_df(self.twist_file)
 
-    def variant_fasta_str (self):
+    def variant_fasta_str(self):
         return ''.join(['>{}\n{}\n'.format()])
 
 
