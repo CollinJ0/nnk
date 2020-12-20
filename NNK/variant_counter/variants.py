@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# filename: variants.py
 
 import pandas as pd
 
@@ -9,12 +10,15 @@ class variants:
     def __init__(self, twist_file, trimmed_ref):
         self.twist_file = twist_file
         self.trimmed_ref = trimmed_ref
-
+    
+    @property
     def variant_df(self):
         return twist_to_variant_df(self.twist_file)
-
+    
+    @property
     def variant_fasta_str(self):
-        return ''.join(['>{}\n{}\n'.format()])
+        df = self.variant_df
+        return ''.join(['>Ref\n{}\n'.format(self.trimmed_ref)]+['>{}\n{}\n'.format(df.loc[i]['Position Name (Optional)'], df.loc[i]['Variant DNA']) for i in df.index])
 
 
 def twist_to_variant_df(tf):
