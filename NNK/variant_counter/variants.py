@@ -91,5 +91,5 @@ def validate_df(_df):
     return (_df)
 
 # TODO
-# def all variants unique
+
 # def no variants map to ref
