@@ -1,1 +1,1 @@
-name = 'NNK'
+name = 'nnk'
