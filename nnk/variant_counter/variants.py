@@ -13,7 +13,6 @@ class Variants:
         self.twist_file = twist_file
         self.trimmed_ref = trimmed_ref
         self.unique = None
-        self.test='X'
         self.variants_map_to_ref = None
     
     @property
