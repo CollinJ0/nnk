@@ -2,9 +2,10 @@
 # filename: variants.py
 
 import inspect
+import logging
 import pandas as pd
 
-class variants:
+class Variants:
     #class_attribute
     purpose = 'unknown'
 
