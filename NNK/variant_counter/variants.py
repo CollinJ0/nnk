@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # filename: variants.py
 
+import inspect
 import pandas as pd
 
 class variants:
@@ -10,6 +11,7 @@ class variants:
     def __init__(self, twist_file, trimmed_ref):
         self.twist_file = twist_file
         self.trimmed_ref = trimmed_ref
+        self.unique = None
     
     @property
     def variant_df(self):
@@ -18,7 +20,53 @@ class variants:
     @property
     def variant_fasta_str(self):
         df = self.variant_df
-        return ''.join(['>Ref\n{}\n'.format(self.trimmed_ref)]+['>{}\n{}\n'.format(df.loc[i]['Position Name (Optional)'], df.loc[i]['Variant DNA']) for i in df.index])
+        
+        if self.unique:
+            return ''.join(['>Ref\n{}\n'.format(self.trimmed_ref)]+['>{}\n{}\n'.format(df.loc[i]['Position Name (Optional)'], df.loc[i]['Variant DNA']) for i in df.index])
+    
+    @property
+    def unique(self):        
+        return self._unique
+            
+    @unique.setter
+    def unique(self, value):
+        __full = len(list(self.variant_df['Variant DNA']))
+        __unique = len(list(set(list(self.variant_df['Variant DNA']))))
+        __test=(__full==__unique)
+        
+        if __unique > __full:
+            raise NameError('Input Twist Bio Excel file is incorrectly formatted: Error code 1')
+        
+        if value == None:
+            self._unique = __test
+            
+        elif value == __test:
+            self._unique = value
+        else:
+            __test_str = 'Unique' if __test else 'Not Unique'
+            print('No, you are trying to assign {} to a variants object that is {}.\nVariants property {}.unique remains {}'.format(str(value), 
+                                                                                                                                    __test_str, 
+                                                                                                                                    self.get_my_name(), 
+                                                                                                                                    str(__test)))
+            self._unique= __test
+            
+        
+        return self._unique
+    
+    def get_my_name(self):
+        ans = []
+        frame = inspect.currentframe().f_back
+        tmp = dict(list(frame.f_globals.items()) + list(frame.f_locals.items()))
+        for k, var in tmp.items():
+            if isinstance(var, self.__class__):
+                if hash(self) == hash(var):
+                    ans.append(k)
+        return ans[0]
+            
+    
+    def variant_fasta_to_file(self, fname):
+        with open('./{}'.format(fname), 'w') as f:
+            f.write(self.variant_fasta_str)
 
 
 def twist_to_variant_df(tf):
@@ -26,7 +74,7 @@ def twist_to_variant_df(tf):
         df = pd.read_excel(tf, sheet_name='Variant Sheet').drop(0)
         validate_df(df)
     except:
-        raise NameError('Input Twist Bio Excel file is incorrectly formatted')
+        raise NameError('Input Twist Bio Excel file is incorrectly formatted: Error code 2')
     return df
 
 def validate_df(_df):
@@ -41,3 +89,7 @@ def validate_df(_df):
     
     assert (list(_df.columns)==correct_columns),"Input Twist Bio Excel file is incorrectly formatted"
     return (_df)
+
+# TODO
+# def all variants unique
+# def no variants map to ref
