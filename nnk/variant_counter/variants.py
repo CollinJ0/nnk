@@ -110,5 +110,5 @@ def validate_df(_df):
     return (_df)
 
 # TODO
-
-# def no variants map to ref
+# if variants map to ref, need to make new variants fasta
+# if variants aren't unique, need to make variants unique
