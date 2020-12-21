@@ -13,6 +13,8 @@ class Variants:
         self.twist_file = twist_file
         self.trimmed_ref = trimmed_ref
         self.unique = None
+        self.test='X'
+        self.variants_map_to_ref = None
     
     @property
     def variant_df(self):
@@ -53,6 +55,22 @@ class Variants:
             
         
         return self._unique
+    
+    @property
+    def variants_map_to_ref(self):
+        return self._variants_map_to_ref
+    
+    @variants_map_to_ref.setter
+    def variants_map_to_ref(self, value):
+        if value != None and type(value)==bool:
+            self._variants_map_to_ref = value
+        elif any(_v in self.trimmed_ref for _v in list(v1.variant_df['Variant DNA'])):
+            self._variants_map_to_ref = True
+        else:
+            self._variants_map_to_ref = False
+        
+        return self._variants_map_to_ref
+        
     
     def get_my_name(self):
         ans = []
