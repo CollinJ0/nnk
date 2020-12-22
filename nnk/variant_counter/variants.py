@@ -13,6 +13,7 @@ class Variants:
         self.twist_file = twist_file
         self.trimmed_ref = trimmed_ref
         self.unique = None
+        self.test='X'
         self.variants_map_to_ref = None
     
     @property
@@ -24,7 +25,9 @@ class Variants:
         df = self.variant_df
         
         if self.unique:
-            return ''.join(['>Ref\n{}\n'.format(self.trimmed_ref)]+['>{}\n{}\n'.format(df.loc[i]['Position Name (Optional)'], df.loc[i]['Variant DNA']) for i in df.index])
+            return ''.join(['>Ref\n{}\n'.format(self.trimmed_ref)]+
+                           ['>{}\n{}\n'.format(df.loc[i]['Position Name (Optional)'],
+                                               df.loc[i]['Variant DNA']) for i in df.index])
     
     @property
     def unique(self):        
@@ -46,10 +49,11 @@ class Variants:
             self._unique = value
         else:
             __test_str = 'Unique' if __test else 'Not Unique'
-            print('No, you are trying to assign {} to a variants object that is {}.\nVariants property {}.unique remains {}'.format(str(value), 
-                                                                                                                                    __test_str, 
-                                                                                                                                    self.get_my_name(), 
-                                                                                                                                    str(__test)))
+            print(("No, you are trying to assign {} to a variants object "
+            "that is {}.\nVariants property {}.unique remains {}".format(str(value), 
+                                                                        __test_str,
+                                                                        self.get_my_name(),
+                                                                        str(__test))))
             self._unique= __test
             
         
@@ -70,6 +74,7 @@ class Variants:
         
         return self._variants_map_to_ref
         
+    
     def get_my_name(self):
         ans = []
         frame = inspect.currentframe().f_back
@@ -79,10 +84,12 @@ class Variants:
                 if hash(self) == hash(var):
                     ans.append(k)
         return ans[0]
-
+            
+    
     def variant_fasta_to_file(self, fname):
         with open('./{}'.format(fname), 'w') as f:
             f.write(self.variant_fasta_str)
+
 
 def twist_to_variant_df(tf):
     try:
