@@ -39,6 +39,20 @@ class Variants:
         __unique = len(list(set(list(self.variant_df['Variant DNA']))))
         __test=(__full==__unique)
         
+        def get_test_str():
+            __test_str = 'Unique' if __test else 'Not Unique'
+            return __test_str
+        
+        def get_my_name():
+            ans = []
+            frame = inspect.currentframe().f_back
+            tmp = dict(list(frame.f_globals.items()) + list(frame.f_locals.items()))
+            for k, var in tmp.items():
+                if isinstance(var, self.__class__):
+                    if hash(self) == hash(var):
+                        ans.append(k)
+            return ans[0]
+        
         if __unique > __full:
             raise NameError('Input Twist Bio Excel file is incorrectly formatted: Error code 1')
         
@@ -48,11 +62,10 @@ class Variants:
         elif value == __test:
             self._unique = value
         else:
-            __test_str = 'Unique' if __test else 'Not Unique'
             print(("No, you are trying to assign {} to a variants object "
             "that is {}.\nVariants property {}.unique remains {}".format(str(value), 
-                                                                        __test_str,
-                                                                        self.get_my_name(),
+                                                                        get_test_str(),
+                                                                        get_my_name(),
                                                                         str(__test))))
             self._unique= __test
             
@@ -73,18 +86,6 @@ class Variants:
             self._variants_map_to_ref = False
         
         return self._variants_map_to_ref
-        
-    
-    def get_my_name(self):
-        ans = []
-        frame = inspect.currentframe().f_back
-        tmp = dict(list(frame.f_globals.items()) + list(frame.f_locals.items()))
-        for k, var in tmp.items():
-            if isinstance(var, self.__class__):
-                if hash(self) == hash(var):
-                    ans.append(k)
-        return ans[0]
-            
     
     def variant_fasta_to_file(self, fname):
         with open('./{}'.format(fname), 'w') as f:
