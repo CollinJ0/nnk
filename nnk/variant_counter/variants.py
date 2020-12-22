@@ -4,7 +4,7 @@
 import inspect
 import logging
 import pandas as pd
-#test
+
 class Variants:
     #class_attribute
     purpose = 'unknown'
@@ -70,7 +70,6 @@ class Variants:
         
         return self._variants_map_to_ref
         
-    
     def get_my_name(self):
         ans = []
         frame = inspect.currentframe().f_back
@@ -80,12 +79,10 @@ class Variants:
                 if hash(self) == hash(var):
                     ans.append(k)
         return ans[0]
-            
-    
+
     def variant_fasta_to_file(self, fname):
         with open('./{}'.format(fname), 'w') as f:
             f.write(self.variant_fasta_str)
-
 
 def twist_to_variant_df(tf):
     try:
