@@ -77,7 +77,7 @@ class Variants:
     def variants_map_to_ref(self, value):
         if value != None and type(value)==bool:
             self._variants_map_to_ref = value
-        elif any(_v in self.trimmed_ref for _v in list(v1.variant_df['Variant DNA'])):
+        elif any(_v in self.trimmed_ref for _v in list(self.variant_df['Variant DNA'])):
             self._variants_map_to_ref = True
         else:
             self._variants_map_to_ref = False
