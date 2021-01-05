@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: nnk
+Version: 0.0.1.dev0
+Summary: Tools for counting "NNK" variants from a yeast display library and downstream analysis
+Home-page: https://www.github.com/CollinJ0/nnk
+Author: CollinJ0
+License: UNKNOWN
+Description: # nnk
+        Tools for counting "NNK" variants from a yeast display library and downstream analysis
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
