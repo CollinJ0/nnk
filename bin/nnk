@@ -1,3 +1,4 @@
 #!/usr/bin/env python
 # filename: nnk
 
+print('Tools for counting "NNK" variants from a yeast display library and downstream analysis.')
