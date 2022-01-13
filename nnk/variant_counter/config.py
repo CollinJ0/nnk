@@ -4,6 +4,8 @@
 VPURPOSE='Data Wrangle the Variants'
 VFS1='>Ref\n{}\n'
 VFS2='>{}\n{}\n'
+VFS3='./{}'
+W='w'
 VPOSCOL='Position Name (Optional)'
 VVDNACOL='Variant DNA'
 UNIQUE='Unique'

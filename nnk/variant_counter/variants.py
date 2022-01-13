@@ -100,7 +100,7 @@ class Variants:
         return self._variants_map_to_ref
     
     def variant_fasta_to_file(self, fname):
-        with open('./{}'.format(fname), 'w') as f:
+        with open(config.VFS3.format(fname), config.W) as f:
             f.write(self.variant_fasta_str)
     
     @staticmethod

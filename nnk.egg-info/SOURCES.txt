@@ -1,5 +1,6 @@
 LICENCE
 README.md
+pyproject.toml
 setup.py
 bin/__init__.py
 bin/nnk
