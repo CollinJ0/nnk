@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='nnk',
-    version='0.0.1dev',
+    version='0.0.2dev',
     #packages=['nnk',],
     description='Tools for counting "NNK" variants from a yeast display library and downstream analysis',
     author="CollinJ0",
