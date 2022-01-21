@@ -7,7 +7,7 @@ SAMPLES = [f.split('.fastq.gz')[0] for f in os.listdir('data')]
 rule all:
     input:
         "results/raw_qc/multiqc_report.html",
-        expand("results/trimmed/{sample}_cutadapt_trimmed.fastq.gz", sample=SAMPLES)
+        expand("results/trimmed/{sample}_sickle_cutadapt_trimmed.fastq.gz", sample=SAMPLES)
 
 rule raw_fastqc:
     input:
@@ -33,8 +33,20 @@ rule cutadapt:
         "data/{sample}.fastq.gz",
         config['adapters']
     output:
-        "results/trimmed/{sample}_cutadapt_trimmed.fastq.gz"
+        temp("results/trimmed/{sample}_cutadapt_trimmed.fastq.gz")
     threads: 16
     script:
         "scripts/adapter_trim.py"
+
+rule sickle:
+    input: 
+        "results/trimmed/{s}_R1_001_cutadapt_trimmed.fastq.gz",
+        "results/trimmed/{s}_R2_001_cutadapt_trimmed.fastq.gz"
+    output:
+        "results/trimmed/{s}_R1_001_sickle_cutadapt_trimmed.fastq.gz",
+        "results/trimmed/{s}_R2_001_sickle_cutadapt_trimmed.fastq.gz"
+    threads: 1
+    shell:
+        "sickle pe -t sanger -l 50 -q 20 -g -x -f {input[0]} -o {output[0]} -r {input[1]} -p {output[1]} -s /dev/null"
+
 
