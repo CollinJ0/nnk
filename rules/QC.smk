@@ -76,7 +76,7 @@ rule pandaseq:
         "results/trimmed/{m}_R1_001_sickle_cutadapt_trimmed.fastq.gz",
         "results/trimmed/{m}_R2_001_sickle_cutadapt_trimmed.fastq.gz"
     output:
-        "results/merged/{m}.fasta
+        "results/merged/{m}.fasta"
     threads: 16
     shell:
         "pandaseq -f {input[0]} -r {input[1]} -A simple_bayesian -d rbfkms -T {threads} -w {wildcards.m}.fasta"
