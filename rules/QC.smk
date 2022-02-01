@@ -3,12 +3,11 @@ import os
 configfile: "config.yaml"
 
 SAMPLES = [f.split('.fastq.gz')[0] for f in os.listdir('data')]
-SAMPLE_BASES = [s.split('_R')[0] for s in SAMPLES]
+SAMPLE_BASES = [sam[:-7] for sam in SAMPLES]
 
 rule all:
     input:
         "results/raw_qc/multiqc_report.html",
-        expand("results/trimmed/{sample}_sickle_cutadapt_trimmed.fastq.gz", sample=SAMPLES),
         "results/trimmed_qc/multiqc_report.html",
         expand("results/merged/{sb}.fasta", sb=SAMPLE_BASES)
 
@@ -79,4 +78,4 @@ rule pandaseq:
         "results/merged/{m}.fasta"
     threads: 16
     shell:
-        "pandaseq -f {input[0]} -r {input[1]} -A simple_bayesian -d rbfkms -T {threads} -w {wildcards.m}.fasta"
+        "pandaseq -f {input[0]} -r {input[1]} -A simple_bayesian -d rbfkms -T {threads} -w results/merged/{wildcards.m}.fasta"
