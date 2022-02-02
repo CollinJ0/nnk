@@ -9,7 +9,7 @@ rule all:
     input:
         "results/raw_qc/multiqc_report.html",
         "results/trimmed_qc/multiqc_report.html",
-        expand("results/merged/{sb}.fasta", sb=SAMPLE_BASES)
+        expand("results/summary_figures/{sb}_Read_Counts.pdf", sb=SAMPLE_BASES)
 
 rule raw_fastqc:
     input:
@@ -38,7 +38,7 @@ rule cutadapt:
         temp("results/trimmed/{sample}_cutadapt_trimmed.fastq.gz")
     threads: 16
     script:
-        "scripts/adapter_trim.py"
+        "scripts/cutadapt.py"
 
 rule sickle:
     input: 
@@ -79,3 +79,17 @@ rule pandaseq:
     threads: 16
     shell:
         "pandaseq -f {input[0]} -r {input[1]} -A simple_bayesian -d rbfkms -T {threads} -w results/merged/{wildcards.m}.fasta"
+
+rule summary_figures:
+    input:
+        "results/raw_qc/{s}_R1_001_fastqc.zip",
+        "results/raw_qc/{s}_R2_001_fastqc.zip",
+        "results/trimmed_qc/{s}_R1_001_sickle_cutadapt_trimmed_fastqc.zip",
+        "results/trimmed_qc/{s}_R1_001_sickle_cutadapt_trimmed_fastqc.zip",
+        "results/merged/{s}.fasta"
+    output:
+        "results/summary_figures/{s}_Read_Counts.pdf",
+        "results/summary_figures/{s}_BCs-per-seq.pdf"
+    script:
+        "scripts/preprocess_figs.py"
+
