@@ -242,6 +242,7 @@ dependencies:
     - pillow==8.4.0
     - pyyaml==6.0
     - rich==11.0.0
+    - seaborn==0.11.2
     - simplejson==3.17.6
     - spectra==0.0.11
     - urllib3==1.26.8
