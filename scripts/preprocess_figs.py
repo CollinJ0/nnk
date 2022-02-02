@@ -11,12 +11,12 @@ from Bio import SeqIO
 
 def read_fastq(fastq_file):
     with gzip.open(fastq_file, "rt") as f:
-        sequences = [Sequence(s) for s in SeqIO.parse(f, 'fastq')]
+        sequences = [s for s in SeqIO.parse(f, 'fastq')]
     return sequences
 
 def read_fasta(fasta_file):
     with open(fasta_file) as f:
-        sequences = [Sequence(s) for s in SeqIO.parse(f, 'fasta')]
+        sequences = [s for s in SeqIO.parse(f, 'fasta')]
     return sequences
 
 def fastqc_counts(zipped_file):
