@@ -7,6 +7,7 @@ import zipfile
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import pandas as pd
 from Bio import SeqIO
 
 def read_fastq(fastq_file):
