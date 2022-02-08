@@ -189,7 +189,6 @@ dependencies:
   - snakemake=6.13.1
   - snakemake-minimal=6.13.1
   - sqlite=3.37.0
-  - stone=3.2.1
   - stopit=1.1.2
   - tabulate=0.8.9
   - tk=8.6.11
