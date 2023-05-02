@@ -5,12 +5,6 @@ configfile: "config.yaml"
 SAMPLES = [f.split('.fastq.gz')[0] for f in os.listdir('data')]
 SAMPLE_BASES = [sam[:-7] for sam in SAMPLES]
 
-rule all:
-    input:
-        "results/raw_qc/multiqc_report.html",
-        "results/trimmed_qc/multiqc_report.html",
-        expand("results/summary_figures/{sb}_Read_Counts.pdf", sb=SAMPLE_BASES)
-
 rule raw_fastqc:
     input:
         "data/{sample}.fastq.gz"
